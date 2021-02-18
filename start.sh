@@ -1,16 +1,13 @@
 #!/bin/bash
 
+export SECRET_KEY_BASE=W68eso5YQOlbtvSNUR50N/HDWj6IaEhAwMR3LtzuBEQAefwYVbX84bvoTA7XtiGi
 export MIX_ENV=prod
-export PORT=4801
+export PORT=4790
 
-CFGD=$(readlink -f ~/.config/bulls)
+echo "Stopping old copy of app, if any..."
 
-if [ ! -e "$CFGD/base" ]; then
-    echo "run deploy first"
-    exit 1
-fi
+_build/prod/rel/practice/bin/practice stop || true
 
-SECRET_KEY_BASE=$(cat "$CFGD/base")
-export SECRET_KEY_BASE
+echo "Starting app..."
 
-_build/prod/rel/bulls/bin/bulls start
+_build/prod/rel/practice/bin/practice start
